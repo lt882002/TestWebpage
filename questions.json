@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "question": "HTML中哪个标签用于创建超链接？",
+        "options": ["<link>", "<a>", "<href>", "<url>"],
+        "answer": 1,
+        "explanation": "<a>标签用于创建超链接，href属性指定链接的目标地址。"
+    },
+    {
+        "id": 2,
+        "question": "CSS中哪个属性用于改变文本颜色？",
+        "options": ["text-color", "font-color", "color", "text-style"],
+        "answer": 2,
+        "explanation": "color属性用于设置文本的颜色。"
+    },
+    {
+        "id": 3,
+        "question": "JavaScript中哪个方法用于向控制台输出信息？",
+        "options": ["console.print()", "console.log()", "print()", "log()"],
+        "answer": 1,
+        "explanation": "console.log()是JavaScript中用于向控制台输出信息的方法。"
+    }
+]
