@@ -4,33 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>在线刷题系统</title>
+    
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        body {
+            background-color: #f8f9fa;
+            padding-bottom: 60px;
+        }
         .question-card {
             margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .nav-tabs {
+            margin-bottom: 20px;
+        }
+        .tab-content {
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        #auth-status {
+            font-weight: bold;
+        }
+        .text-success {
+            color: #28a745;
+        }
+        .text-danger {
+            color: #dc3545;
         }
         .hidden {
             display: none;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container mt-4">
-        <h1 class="text-center mb-4">在线刷题系统</h1>
+        <h1 class="text-center mb-4">
+            <i class="fas fa-book-open me-2"></i>在线刷题系统
+        </h1>
+        
+        <!-- 用户认证卡片 -->
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <span id="auth-status">未登录</span>
+            </div>
+            <div class="card-body">
+                <!-- 登录表单 -->
+                <div id="login-form">
+                    <div id="alert-container"></div>
+                    <div class="mb-3">
+                        <label for="login-email" class="form-label">邮箱</label>
+                        <input type="email" class="form-control" id="login-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="login-password" class="form-label">密码</label>
+                        <input type="password" class="form-control" id="login-password" required>
+                    </div>
+                    <button id="login-btn" class="btn btn-primary me-2">
+                        <i class="fas fa-sign-in-alt me-1"></i>登录
+                    </button>
+                    <button id="signup-btn" class="btn btn-secondary">
+                        <i class="fas fa-user-plus me-1"></i>注册
+                    </button>
+                </div>
+                
+                <!-- 用户操作 -->
+                <div id="user-actions" class="d-none">
+                    <button id="logout-btn" class="btn btn-danger">
+                        <i class="fas fa-sign-out-alt me-1"></i>退出登录
+                    </button>
+                </div>
+            </div>
+        </div>
         
         <!-- 导航标签 -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="practice-tab" data-bs-toggle="tab" data-bs-target="#practice" type="button">刷题</button>
+                <button class="nav-link active" id="practice-tab" data-bs-toggle="tab" data-bs-target="#practice" type="button">
+                    <i class="fas fa-pencil-alt me-1"></i>刷题
+                </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="import-tab" data-bs-toggle="tab" data-bs-target="#import" type="button">导入题库</button>
+                <button class="nav-link" id="import-tab" data-bs-toggle="tab" data-bs-target="#import" type="button">
+                    <i class="fas fa-file-import me-1"></i>导入题库
+                </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="records-tab" data-bs-toggle="tab" data-bs-target="#records" type="button">刷题记录</button>
+                <button class="nav-link" id="records-tab" data-bs-toggle="tab" data-bs-target="#records" type="button">
+                    <i class="fas fa-history me-1"></i>刷题记录
+                </button>
             </li>
         </ul>
         
@@ -41,41 +121,81 @@
                 <div id="question-container" class="question-card">
                     <h3 id="question-text">加载题目中...</h3>
                     <div id="options-container" class="mt-3"></div>
-                    <button id="submit-answer" class="btn btn-primary mt-3">提交答案</button>
+                    <button id="submit-answer" class="btn btn-primary mt-3">
+                        <i class="fas fa-check me-1"></i>提交答案
+                    </button>
                     <div id="feedback" class="mt-3"></div>
                 </div>
-                <button id="next-question" class="btn btn-secondary mt-2 hidden">下一题</button>
+                <button id="next-question" class="btn btn-secondary mt-2 hidden">
+                    <i class="fas fa-arrow-right me-1"></i>下一题
+                </button>
             </div>
             
             <!-- 导入题库区域 -->
             <div class="tab-pane fade" id="import" role="tabpanel">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-1"></i>
+                    请上传JSON格式的题库文件，格式参考示例。
+                    <a href="questions.json" download="questions-example.json" class="alert-link">
+                        <i class="fas fa-download me-1"></i>下载示例文件
+                    </a>
+                </div>
+                
                 <div class="mb-3">
-                    <label for="question-file" class="form-label">上传题库文件 (JSON格式)</label>
+                    <label for="question-file" class="form-label">选择题库文件</label>
                     <input class="form-control" type="file" id="question-file" accept=".json">
                 </div>
-                <button id="import-questions" class="btn btn-primary">导入题库</button>
+                <button id="import-questions" class="btn btn-primary">
+                    <i class="fas fa-upload me-1"></i>导入题库
+                </button>
                 <div id="import-status" class="mt-3"></div>
             </div>
             
             <!-- 刷题记录区域 -->
             <div class="tab-pane fade" id="records" role="tabpanel">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>日期</th>
-                            <th>题目</th>
-                            <th>结果</th>
-                        </tr>
-                    </thead>
-                    <tbody id="records-table">
-                        <!-- 记录将在这里动态生成 -->
-                    </tbody>
-                </table>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>最近答题记录</h4>
+                    <span class="badge bg-primary">最新20条</span>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th><i class="fas fa-calendar me-1"></i>日期</th>
+                                <th><i class="fas fa-question me-1"></i>题目</th>
+                                <th><i class="fas fa-poll me-1"></i>结果</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records-table">
+                            <tr>
+                                <td colspan="3" class="text-center">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-
+    
+    <div class="footer">
+        <div class="container">
+            <small class="text-muted">在线刷题系统 &copy; 2023 - 通过GitHub Pages部署</small>
+        </div>
+    </div>
+    
+    <!-- Bootstrap & Firebase JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    
+    <!-- 初始化文件 -->
+    <script src="firebase-init.js"></script>
+    
+    <!-- 主应用逻辑 -->
     <script src="app.js"></script>
 </body>
 </html>
