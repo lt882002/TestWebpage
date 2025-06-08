@@ -1,89 +1,201 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/11.9.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/11.9.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/11.9.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/11.9.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/11.9.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/11.9.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/11.9.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/11.9.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/11.9.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/11.9.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线刷题系统</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-bottom: 60px;
         }
-      });
-    </script>
-  </body>
+        .question-card {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .nav-tabs {
+            margin-bottom: 20px;
+        }
+        .tab-content {
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        #auth-status {
+            font-weight: bold;
+        }
+        .text-success {
+            color: #28a745;
+        }
+        .text-danger {
+            color: #dc3545;
+        }
+        .hidden {
+            display: none;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">
+            <i class="fas fa-book-open me-2"></i>在线刷题系统
+        </h1>
+        
+        <!-- 用户认证卡片 -->
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <span id="auth-status">未登录</span>
+            </div>
+            <div class="card-body">
+                <!-- 登录表单 -->
+                <div id="login-form">
+                    <div id="alert-container"></div>
+                    <div class="mb-3">
+                        <label for="login-email" class="form-label">邮箱</label>
+                        <input type="email" class="form-control" id="login-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="login-password" class="form-label">密码</label>
+                        <input type="password" class="form-control" id="login-password" required>
+                    </div>
+                    <button id="login-btn" class="btn btn-primary me-2">
+                        <i class="fas fa-sign-in-alt me-1"></i>登录
+                    </button>
+                    <button id="signup-btn" class="btn btn-secondary">
+                        <i class="fas fa-user-plus me-1"></i>注册
+                    </button>
+                </div>
+                
+                <!-- 用户操作 -->
+                <div id="user-actions" class="d-none">
+                    <button id="logout-btn" class="btn btn-danger">
+                        <i class="fas fa-sign-out-alt me-1"></i>退出登录
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 导航标签 -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="practice-tab" data-bs-toggle="tab" data-bs-target="#practice" type="button">
+                    <i class="fas fa-pencil-alt me-1"></i>刷题
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="import-tab" data-bs-toggle="tab" data-bs-target="#import" type="button">
+                    <i class="fas fa-file-import me-1"></i>导入题库
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="records-tab" data-bs-toggle="tab" data-bs-target="#records" type="button">
+                    <i class="fas fa-history me-1"></i>刷题记录
+                </button>
+            </li>
+        </ul>
+        
+        <!-- 内容区域 -->
+        <div class="tab-content p-3 border border-top-0 rounded-bottom">
+            <!-- 刷题区域 -->
+            <div class="tab-pane fade show active" id="practice" role="tabpanel">
+                <div id="question-container" class="question-card">
+                    <h3 id="question-text">加载题目中...</h3>
+                    <div id="options-container" class="mt-3"></div>
+                    <button id="submit-answer" class="btn btn-primary mt-3">
+                        <i class="fas fa-check me-1"></i>提交答案
+                    </button>
+                    <div id="feedback" class="mt-3"></div>
+                </div>
+                <button id="next-question" class="btn btn-secondary mt-2 hidden">
+                    <i class="fas fa-arrow-right me-1"></i>下一题
+                </button>
+            </div>
+            
+            <!-- 导入题库区域 -->
+            <div class="tab-pane fade" id="import" role="tabpanel">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-1"></i>
+                    请上传JSON格式的题库文件，格式参考示例。
+                    <a href="questions.json" download="questions-example.json" class="alert-link">
+                        <i class="fas fa-download me-1"></i>下载示例文件
+                    </a>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="question-file" class="form-label">选择题库文件</label>
+                    <input class="form-control" type="file" id="question-file" accept=".json">
+                </div>
+                <button id="import-questions" class="btn btn-primary">
+                    <i class="fas fa-upload me-1"></i>导入题库
+                </button>
+                <div id="import-status" class="mt-3"></div>
+            </div>
+            
+            <!-- 刷题记录区域 -->
+            <div class="tab-pane fade" id="records" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>最近答题记录</h4>
+                    <span class="badge bg-primary">最新20条</span>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th><i class="fas fa-calendar me-1"></i>日期</th>
+                                <th><i class="fas fa-question me-1"></i>题目</th>
+                                <th><i class="fas fa-poll me-1"></i>结果</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records-table">
+                            <tr>
+                                <td colspan="3" class="text-center">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="container">
+            <small class="text-muted">在线刷题系统 &copy; 2023 - 通过GitHub Pages部署</small>
+        </div>
+    </div>
+    
+    <!-- Bootstrap & Firebase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    
+    <!-- 初始化文件 -->
+    <script src="firebase-init.js"></script>
+    
+    <!-- 主应用逻辑 -->
+    <script src="app.js"></script>
+</body>
 </html>
